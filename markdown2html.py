@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     def heading(line):
         heading_level = line.count('#')
-        line = line.replace('#', '').replace('\n', '').replace(' ', '')
+        line = line.replace('#', '').replace('\n', '')
         str_return = "<h{}>{}</h{}>".format(heading_level, line, heading_level)
         return str_return
 
