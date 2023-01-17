@@ -4,7 +4,7 @@
         *First argument is the name of the Markdown file
         *Second argument is the output file name
 """
-from sys import argv, exit, stderr
+from sys import argv, stderr
 import os
 if __name__ == "__main__":
     if len(argv) <= 2:
