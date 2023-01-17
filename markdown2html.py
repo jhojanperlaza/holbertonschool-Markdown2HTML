@@ -11,7 +11,7 @@ if __name__ == "__main__":
         print("Usage: ./markdown2html.py README.md README.html")
         exit(1)
         
-    elif not os.path.isfile("./" + sys.argv[1]):
+    elif not os.path.exists(sys.argv[1]):
         print("Missing <filename>")
         exit(1)
 
