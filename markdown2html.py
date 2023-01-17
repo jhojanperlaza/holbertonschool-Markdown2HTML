@@ -7,12 +7,12 @@
 import sys
 import os
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) <= 2:
         print("Usage: ./markdown2html.py README.md README.html")
         exit(1)
         
     elif not os.path.exists(sys.argv[1]):
-        print("Missing <filename>")
+        print("Missing {}".format(sys.argv[1]))
         exit(1)
 
     exit(0)
