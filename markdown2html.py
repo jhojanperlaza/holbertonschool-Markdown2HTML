@@ -59,9 +59,9 @@ if __name__ == "__main__":
                     new_line = expressions[previous_expression](listing_lines)
                     lines_to_write.append(new_line)
                     listing_lines = []
-                else:
-                    new_line = expressions[line[0]](line)
-                    lines_to_write.append(new_line)
+
+                new_line = expressions[line[0]](line)
+                lines_to_write.append(new_line)
 
     with open(argv[2], 'w') as f:
         for line in lines_to_write:
