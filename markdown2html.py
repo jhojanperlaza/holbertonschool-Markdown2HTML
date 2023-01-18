@@ -21,7 +21,7 @@ if __name__ == "__main__":
     def unordered_list(lines, expression):
         list_returnt = []
         for line in lines:
-            line = line.replace('-', '').replace('\n', '')
+            line = line.replace('-', '').replace('*', '').replace('\n', '')
             list_returnt.append("\t<li>{}</li>\n".format(line))
 
         if expression == '-':
