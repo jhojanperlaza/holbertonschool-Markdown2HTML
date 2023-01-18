@@ -31,6 +31,19 @@ if __name__ == "__main__":
 
         return str_return
 
+    def paragraph(lines):
+
+        if len(lines) > 1:
+            list_returnt = []
+            for line in lines[:-1]:
+                line = "\t" + line
+                list_returnt.append(line.replace('\n', '\n\t<br />\n'))
+            str_return = "<p>\n{}\t{}</p>".format(''.join(list_returnt), lines[-1])
+        else:
+            str_return = "<p>\n\t{}</p>".format(''.join(lines[0]))
+
+        return str_return
+
     expressions = {"-": unordered_list, "#": heading, "*": unordered_list}
 
     if len(argv) <= 2:
@@ -45,6 +58,7 @@ if __name__ == "__main__":
 
     lines_to_write = []
     listing_lines = []
+    text_lines = []
     previous_expression = ""
     with open(name_file, 'r') as f:
         file_lines = f.readlines()
@@ -67,6 +81,18 @@ if __name__ == "__main__":
 
                 new_line = expressions[line[0]](line)
                 lines_to_write.append(new_line)
+            else:
+                if line[0].isalpha() == False:
+                    if len(text_lines) != 0:
+                        new_line = paragraph(text_lines)
+                        lines_to_write.append(new_line)
+                        text_lines = []
+                    continue
+                if line[0].isalpha():
+                    text_lines.append(line)
+                    if line is last:
+                        new_line = paragraph(text_lines)
+                        lines_to_write.append(new_line)
 
     with open(argv[2], 'w') as f:
         for line in lines_to_write:
