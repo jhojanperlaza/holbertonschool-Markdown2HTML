@@ -33,6 +33,7 @@ if __name__ == "__main__":
 
     def paragraph(lines):
 
+        print(lines)
         if len(lines) > 1:
             list_returnt = []
             for line in lines[:-1]:
@@ -47,7 +48,12 @@ if __name__ == "__main__":
         return str_return
 
     def bold(line):
-        if '__' in line:
+        if '__' in line and '**' in line:
+            li = line.split('__')
+            line = "{}<em>{}</em>{}".format(li[0], li[1], li[2])
+            l = line.split('**')
+            str_return = "{}<b>{}</b>{}".format(l[0], l[1], l[2])
+        elif '__' in line and '**' not in line:
             l = line.split('__')
             str_return = "{}<em>{}</em>{}".format(l[0], l[1], l[2])
         else:
@@ -78,6 +84,8 @@ if __name__ == "__main__":
         for line in file_lines:
 
             if '**' in line or '__' in line:
+                if line is last:
+                    last = bold(line)
                 line = bold(line)
             if line[0] in expressions:
                 if line[0] == '-' or line[0] == '*':
@@ -91,7 +99,7 @@ if __name__ == "__main__":
                     new_line = expressions[previous_expression](
                         listing_lines, previous_expression)
                     lines_to_write.append(new_line)
-                listing_lines = []
+                    listing_lines = []
 
                 new_line = expressions[line[0]](line)
                 lines_to_write.append(new_line)
