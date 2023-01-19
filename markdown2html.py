@@ -69,8 +69,10 @@ if __name__ == "__main__":
         return str_return
 
     def replace_c(line):
-        str = line.replace('((', '').replace('))', '').replace('c', '').replace('C', '')
-        return str
+        l = line.replace('((', '.').replace('))', '.')
+        l = l.split('.')
+        stri = l[1].replace('c', '').replace('C', '')
+        return l[0] + stri + l[2]
 
     expressions = {"-": unordered_list, "#": heading, "*": unordered_list}
 
