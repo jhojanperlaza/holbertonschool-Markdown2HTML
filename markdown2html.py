@@ -119,7 +119,9 @@ if __name__ == "__main__":
                         lines_to_write.append(new_line)
                 if '<b>' in line  or '<em>' in line:
                     if len(text_lines) == 0:
-                        lines_to_write.append(line)
+                        text_lines.append(line)
+                        n = paragraph(text_lines)
+                        lines_to_write.append(n)
 
     with open(argv[2], 'w') as f:
         for line in lines_to_write:
