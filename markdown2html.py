@@ -85,7 +85,7 @@ if __name__ == "__main__":
                 if line is last:
                     last = bold(line)
                 line = bold(line)
-            if line[0] in expressions:
+            if line[0] in expressions and line[1] != '_' and line[1] != '*':
                 if line[0] == '-' or line[0] == '*':
                     previous_expression = line[0]
                     listing_lines.append(line)
@@ -114,10 +114,11 @@ if __name__ == "__main__":
                         text_lines = []
                 if line[0].isalpha():
                     text_lines.append(line)
-
                     if line == last:
                         new_line = paragraph(text_lines)
                         lines_to_write.append(new_line)
+                if '<b>' in line  or '<em>' in line:
+                    lines_to_write.append(line)
 
     with open(argv[2], 'w') as f:
         for line in lines_to_write:
