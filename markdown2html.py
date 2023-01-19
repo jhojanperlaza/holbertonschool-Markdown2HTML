@@ -38,10 +38,21 @@ if __name__ == "__main__":
             for line in lines[:-1]:
                 line = "\t" + line
                 list_returnt.append(line.replace('\n', '\n\t<br />\n'))
-            str_return = "<p>\n{}\t{}</p>".format(''.join(list_returnt), lines[-1])
+            str_return = "<p>\n{}\t{}</p>".format(
+                ''.join(list_returnt), lines[-1])
         else:
-            str_return = "<p>\n\t{}\n</p>".format(''.join(lines[0].replace('\n', '')))
+            str_return = "<p>\n\t{}\n</p>".format(
+                ''.join(lines[0].replace('\n', '')))
 
+        return str_return
+
+    def bold(line):
+        if '__' in line:
+            l = line.split('__')
+            str_return = "{}<em>{}</em>{}".format(l[0], l[1], l[2])
+        else:
+            l = line.split('**')
+            str_return = "{}<b>{}</b>{}".format(l[0], l[1], l[2])
         return str_return
 
     expressions = {"-": unordered_list, "#": heading, "*": unordered_list}
@@ -65,6 +76,9 @@ if __name__ == "__main__":
         last = file_lines[-1]
 
         for line in file_lines:
+
+            if '**' in line or '__' in line:
+                line = bold(line)
             if line[0] in expressions:
                 if line[0] == '-' or line[0] == '*':
                     previous_expression = line[0]
@@ -83,7 +97,8 @@ if __name__ == "__main__":
                 lines_to_write.append(new_line)
             else:
                 if len(listing_lines) != 0:
-                    new_line = expressions[previous_expression](listing_lines, previous_expression)
+                    new_line = expressions[previous_expression](
+                        listing_lines, previous_expression)
                     lines_to_write.append(new_line)
                     listing_lines = []
                 if line[0].isalpha() == False:
