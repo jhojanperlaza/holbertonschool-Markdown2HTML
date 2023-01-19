@@ -40,7 +40,7 @@ if __name__ == "__main__":
                 list_returnt.append(line.replace('\n', '\n\t<br />\n'))
             str_return = "<p>\n{}\t{}</p>".format(''.join(list_returnt), lines[-1])
         else:
-            str_return = "<p>\n\t{}</p>".format(''.join(lines[0]))
+            str_return = "<p>\n\t{}\n</p>".format(''.join(lines[0].replace('\n', '')))
 
         return str_return
 
@@ -77,17 +77,20 @@ if __name__ == "__main__":
                     new_line = expressions[previous_expression](
                         listing_lines, previous_expression)
                     lines_to_write.append(new_line)
-                    listing_lines = []
+                listing_lines = []
 
                 new_line = expressions[line[0]](line)
                 lines_to_write.append(new_line)
             else:
+                if len(listing_lines) != 0:
+                    new_line = expressions[previous_expression](listing_lines, previous_expression)
+                    lines_to_write.append(new_line)
+                    listing_lines = []
                 if line[0].isalpha() == False:
                     if len(text_lines) != 0:
                         new_line = paragraph(text_lines)
                         lines_to_write.append(new_line)
                         text_lines = []
-                    continue
                 if line[0].isalpha():
                     text_lines.append(line)
                     if line is last:
