@@ -8,6 +8,7 @@
 """
 from sys import argv, stderr
 import os
+import hashlib
 
 
 if __name__ == "__main__":
@@ -59,6 +60,18 @@ if __name__ == "__main__":
             str_return = "{}<b>{}</b>{}".format(l[0], l[1], l[2])
         return str_return
 
+    def computeMD5hash(line):
+        l = line.replace('[[', '.').replace(']]', '.')
+        l = l.split('.')
+        m = hashlib.md5()
+        m.update(l[1].encode('utf-8'))
+        str_return = l[0] + m.hexdigest() + l[2]
+        return str_return
+
+    def replace_c(line):
+        str = line.replace('((', '').replace('))', '').replace('c', '').replace('C', '')
+        return str
+
     expressions = {"-": unordered_list, "#": heading, "*": unordered_list}
 
     if len(argv) <= 2:
@@ -85,6 +98,10 @@ if __name__ == "__main__":
                 if line is last:
                     last = bold(line)
                 line = bold(line)
+            if '[[' in line:
+                line = computeMD5hash(line)
+            if '((' in line:
+                line = replace_c(line)
             if line[0] in expressions and line[1] != '_' and line[1] != '*':
                 if line[0] == '-' or line[0] == '*':
                     previous_expression = line[0]
@@ -117,7 +134,7 @@ if __name__ == "__main__":
                     if line == last:
                         new_line = paragraph(text_lines)
                         lines_to_write.append(new_line)
-                if '<b>' in line  or '<em>' in line:
+                if '<b>' in line or '<em>' in line:
                     if len(text_lines) == 0:
                         text_lines.append(line)
                         n = paragraph(text_lines)
