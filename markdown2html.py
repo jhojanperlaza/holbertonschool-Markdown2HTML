@@ -99,8 +99,12 @@ if __name__ == "__main__":
                     last = bold(line)
                 line = bold(line)
             if '[[' in line:
+                if line is last:
+                    last = computeMD5hash(line)
                 line = computeMD5hash(line)
             if '((' in line:
+                if line is last:
+                    last = replace_c(line)
                 line = replace_c(line)
             if line[0] in expressions and line[1] != '_' and line[1] != '*':
                 if line[0] == '-' or line[0] == '*':
