@@ -32,8 +32,6 @@ if __name__ == "__main__":
         return str_return
 
     def paragraph(lines):
-
-        print(lines)
         if len(lines) > 1:
             list_returnt = []
             for line in lines[:-1]:
@@ -116,7 +114,8 @@ if __name__ == "__main__":
                         text_lines = []
                 if line[0].isalpha():
                     text_lines.append(line)
-                    if line is last:
+
+                    if line == last:
                         new_line = paragraph(text_lines)
                         lines_to_write.append(new_line)
 
